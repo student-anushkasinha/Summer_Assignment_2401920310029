@@ -1,1 +1,62 @@
+PPROBLEM NO. 1
 
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+       int currSum=0 , maxSum= INT_MIN;
+
+       for(int val : nums){
+        currSum += val;
+        maxSum = max(currSum,maxSum);
+
+        if(currSum<0){
+            currSum=0;
+        } 
+       } 
+       return maxSum;
+    }
+};
+
+PROBLEM NO. 2
+
+class Solution {
+public:
+    bool containsDuplicate(vector<int>& nums) {
+        unordered_set<int> s;
+
+        for(int i = 0; i < nums.size(); i++) {
+            if(s.count(nums[i])) {
+                return true;
+            }
+            s.insert(nums[i]);
+        }
+
+        return false;
+    }
+};
+
+PROBLEM NO. 3
+
+class Solution {
+public:
+    double findMaxAverage(vector<int>& nums, int k) {
+        int currSum = 0;
+
+        for(int i = 0; i < k; i++) {
+            currSum += nums[i];
+        }
+
+        int bestSum = currSum;
+
+        for(int i = k; i < nums.size(); i++) {
+            currSum -= nums[i - k];
+            currSum += nums[i];
+
+            if(currSum > bestSum) {
+                bestSum = currSum;
+            }
+        }
+
+        return 1.0 * bestSum / k;
+    }
+};
