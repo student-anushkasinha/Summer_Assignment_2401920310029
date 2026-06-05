@@ -1,1 +1,60 @@
+PROBLEM NO. 1
 
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        unordered_map<int, int> mp;
+
+        for (int i = 0; i < nums.size(); i++) {
+            int complement = target - nums[i];
+
+            if (mp.find(complement) != mp.end()) {
+                return {mp[complement], i};
+            }
+
+            mp[nums[i]] = i;
+        }
+
+        return {};
+    }
+};
+
+
+
+PROBLEM NO. 2
+
+
+class Solution {
+public:
+    int removeDuplicates(vector<int>& nums) {
+        int insertIndex=1;
+        for(int i=1; i<nums.size(); i++){
+            if(nums[i-1] != nums[i]){
+                nums[insertIndex] = nums[i];
+                insertIndex++;
+        
+            
+            }
+        }
+        return insertIndex;
+    }
+};
+
+PROBLEM NO. 3
+
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int maxProfit = 0, bestBuy = prices[0];
+
+        for(int i=1; i<prices.size(); i++) {
+            if(prices[i]> bestBuy){
+                maxProfit =max(maxProfit , prices[i] - bestBuy);
+            }
+            bestBuy = min(bestBuy , prices[i]);
+        }
+
+        return maxProfit;
+        
+    }
+};
