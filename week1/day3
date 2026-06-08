@@ -1,1 +1,63 @@
+PROBLEM NO. 1
+class Solution {
+public:
+    void moveZeroes(vector<int>& nums) {
+        int pos = 0;
 
+        for (int i = 0; i < nums.size(); i++) {
+            if (nums[i] != 0) {
+                swap(nums[pos], nums[i]);
+                pos++;
+            }
+        }
+    }
+};
+
+PROBLEM NO. 2
+class Solution {
+public:
+    vector<int> sortedSquares(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> ans(n);
+
+        int left = 0;
+        int right = n - 1;
+        int idx = n - 1;
+
+        while (left <= right) {
+            int leftSq = nums[left] * nums[left];
+            int rightSq = nums[right] * nums[right];
+
+            if (leftSq > rightSq) {
+                ans[idx] = leftSq;
+                left++;
+            } else {
+                ans[idx] = rightSq;
+                right--;
+            }
+            idx--;
+        }
+
+        return ans;
+
+PROBLEM NO. 3
+
+class Solution {
+public:
+    int maxArea(vector<int>& height) {
+        int maxWater=0;
+        int lp=0, rp=height.size()-1;
+
+        while(lp<rp){
+            int w = rp-lp;
+            int ht= min(height[lp], height[rp]);
+            int currWater =w* ht;
+            maxWater = max(maxWater, currWater);
+
+            height[lp]<height[rp]? lp++: rp--;
+        }
+        return maxWater;
+    }
+};
+    }
+};
