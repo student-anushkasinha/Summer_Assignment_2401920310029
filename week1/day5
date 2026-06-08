@@ -1,1 +1,70 @@
+PROBLEM NO. 1
 
+class Solution {
+public:
+    bool isPalindrome(string s) {
+        int left = 0;
+        int right = s.size() - 1;
+
+        while (left < right) {
+            while (left < right && !isalnum(s[left])) {
+                left++;
+            }
+
+            while (left < right && !isalnum(s[right])) {
+                right--;
+            }
+
+            if (tolower(s[left]) != tolower(s[right])) {
+                return false;
+            }
+
+            left++;
+            right--;
+        }
+
+        return true;
+
+
+PROBLEM NO. 2
+
+class Solution {
+public:
+    void reverseString(vector<char>& s) {
+        int start = 0;
+        int end = s.size() - 1;
+
+        while (start < end) {
+            char temp = s[start];
+            s[start] = s[end];
+            s[end] = temp;
+
+            start++;
+            end--;
+        }
+    }
+};
+
+
+PROBLEM NO. 3
+
+class Solution {
+public:
+    string longestCommonPrefix(vector<string>& strs) {
+        string prefix = strs[0];
+
+        for (int i = 1; i < strs.size(); i++) {
+            while (strs[i].find(prefix) != 0) {
+                prefix.pop_back();
+
+                if (prefix.empty()) {
+                    return "";
+                }
+            }
+        }
+
+        return prefix;
+    }
+};
+    }
+};
