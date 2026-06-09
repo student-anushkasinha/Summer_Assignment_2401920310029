@@ -1,1 +1,92 @@
+PROBLEM NO. 1
 
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        vector<int> pos(256, -1);
+
+        int start = 0;
+        int ans = 0;
+
+        for(int i = 0; i < s.size(); i++) {
+
+            if(pos[s[i]] >= start)
+                start = pos[s[i]] + 1;
+
+            pos[s[i]] = i;
+
+            ans = max(ans, i - start + 1);
+        }
+
+        return ans;
+    }
+};
+
+
+PROBLEM NO. 2
+
+class Solution {
+public:
+    bool checkInclusion(string s1, string s2) {
+
+        if(s1.size() > s2.size())
+            return false;
+
+        vector<int> a(26,0), b(26,0);
+
+        for(char ch : s1)
+            a[ch-'a']++;
+
+        for(int i=0;i<s1.size();i++)
+            b[s2[i]-'a']++;
+
+        if(a==b)
+            return true;
+
+        for(int i=s1.size();i<s2.size();i++){
+
+            b[s2[i]-'a']++;
+            b[s2[i-s1.size()]-'a']--;
+
+            if(a==b)
+                return true;
+        }
+
+        return false;
+    }
+};
+
+PROBLEM NO. 3
+
+class Solution {
+public:
+    vector<int> findAnagrams(string s, string p) {
+
+        vector<int> ans;
+
+        if(p.size() > s.size())
+            return ans;
+
+        vector<int> a(26,0), b(26,0);
+
+        for(char ch : p)
+            a[ch-'a']++;
+
+        for(int i=0;i<p.size();i++)
+            b[s[i]-'a']++;
+
+        if(a==b)
+            ans.push_back(0);
+
+        for(int i=p.size();i<s.size();i++){
+
+            b[s[i]-'a']++;
+            b[s[i-p.size()]-'a']--;
+
+            if(a==b)
+                ans.push_back(i-p.size()+1);
+        }
+
+        return ans;
+    }
+};
