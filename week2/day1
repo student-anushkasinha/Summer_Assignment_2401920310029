@@ -1,3 +1,5 @@
+PROBLEM NO. 1
+
 class Solution {
 public:
     bool isAnagram(string s, string t) {
@@ -16,6 +18,47 @@ public:
             if (freq[i] != 0) {
                 return false;
             }
+        }
+
+        return true;
+    }
+};
+
+PROBLEM NO. 2
+
+class Solution {
+public:
+    int firstUniqChar(string s) {
+        int freq[26] = {0};
+
+        for(char ch : s) {
+            freq[ch - 'a']++;
+        }
+
+        for(int i = 0; i < s.size(); i++) {
+            if(freq[s[i] - 'a'] == 1)
+                return i;
+        }
+
+        return -1;
+    }
+};
+
+PROBLEM NO. 3
+
+class Solution {
+public:
+    bool canConstruct(string ransomNote, string magazine) {
+        int cnt[26] = {0};
+
+        for(char ch : magazine)
+            cnt[ch - 'a']++;
+
+        for(char ch : ransomNote) {
+            if(cnt[ch - 'a'] == 0)
+                return false;
+
+            cnt[ch - 'a']--;
         }
 
         return true;
