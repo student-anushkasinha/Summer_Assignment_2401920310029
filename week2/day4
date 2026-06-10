@@ -1,1 +1,105 @@
+PROBLEM NO.1
+class Solution {
+public:
+    string reverseWords(string s) {
 
+        int start = 0;
+
+        for (int i = 0; i <= s.size(); i++) {
+
+            if (i == s.size() || s[i] == ' ') {
+
+                int left = start;
+                int right = i - 1;
+
+                while (left < right) {
+                    swap(s[left], s[right]);
+                    left++;
+                    right--;
+                }
+
+                start = i + 1;
+            }
+        }
+
+        return s;
+    }
+};
+PROBLEM NO.2
+
+class Solution {
+public:
+    string decodeString(string s) {
+
+        stack<int> numbers;
+        stack<string> words;
+
+        string current = "";
+        int num = 0;
+
+        for (char ch : s) {
+
+            if (isdigit(ch)) {
+                num = num * 10 + (ch - '0');
+            }
+
+            else if (ch == '[') {
+                numbers.push(num);
+                words.push(current);
+                num = 0;
+                current = "";
+            }
+
+            else if (ch == ']') {
+
+                int repeat = numbers.top();
+                numbers.pop();
+
+                string temp = words.top();
+                words.pop();
+
+                while (repeat--) {
+                    temp += current;
+                }
+
+                current = temp;
+            }
+
+            else {
+                current += ch;
+            }
+        }
+
+        return current;
+    }
+};
+PROBLEM NO.3
+
+class Solution {
+public:
+
+    vector<string> answer;
+
+    void generate(string current, int open, int close, int n) {
+
+        if (current.size() == 2 * n) {
+            answer.push_back(current);
+            return;
+        }
+
+        if (open < n) {
+            generate(current + "(", open + 1, close, n);
+        }
+
+        if (close < open) {
+            generate(current + ")", open, close + 1, n);
+        }
+    }
+
+    vector<string> generateParenthesis(int n) {
+
+        generate("", 0, 0, n);
+
+        return answer;
+    }
+};
