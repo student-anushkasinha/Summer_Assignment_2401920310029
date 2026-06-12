@@ -1,1 +1,103 @@
+PROBLEM NO.1
 
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+
+        unordered_map<string, vector<string>> mp;
+
+        for (string s : strs) {
+            string temp = s;
+            sort(temp.begin(), temp.end());
+            mp[temp].push_back(s);
+        }
+
+        vector<vector<string>> ans;
+
+        for (auto it : mp) {
+            ans.push_back(it.second);
+        }
+
+        return ans;
+    }
+};
+
+
+PROBLEM NO.2
+
+class Solution {
+public:
+    int compress(vector<char>& chars) {
+
+        int write = 0;
+        int i = 0;
+
+        while (i < chars.size()) {
+
+            char current = chars[i];
+            int count = 0;
+
+            while (i < chars.size() && chars[i] == current) {
+                count++;
+                i++;
+            }
+
+            chars[write++] = current;
+
+            if (count > 1) {
+                string num = to_string(count);
+
+                for (char c : num) {
+                    chars[write++] = c;
+                }
+            }
+        }
+
+        return write;
+    }
+};
+
+PROBLEM NO.3
+
+class Solution {
+public:
+
+    string longestPalindrome(string s) {
+
+        int start = 0;
+        int len = 1;
+
+        for (int i = 0; i < s.size(); i++) {
+
+            int left = i;
+            int right = i;
+
+            while (left >= 0 && right < s.size() && s[left] == s[right]) {
+
+                if (right - left + 1 > len) {
+                    start = left;
+                    len = right - left + 1;
+                }
+
+                left--;
+                right++;
+            }
+
+            left = i;
+            right = i + 1;
+
+            while (left >= 0 && right < s.size() && s[left] == s[right]) {
+
+                if (right - left + 1 > len) {
+                    start = left;
+                    len = right - left + 1;
+                }
+
+                left--;
+                right++;
+            }
+        }
+
+        return s.substr(start, len);
+    }
+};
