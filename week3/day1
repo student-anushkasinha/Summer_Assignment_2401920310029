@@ -1,1 +1,66 @@
+PROBLEM NO.1
 
+class Solution {
+public:
+    bool hasCycle(ListNode *head) {
+
+        if (head == NULL)
+            return false;
+
+        ListNode *slow = head;
+        ListNode *fast = head;
+
+        while (fast != NULL && fast->next != NULL) {
+
+            slow = slow->next;
+            fast = fast->next->next;
+
+            if (slow == fast)
+                return true;
+        }
+
+        return false;
+    }
+};
+
+PROBLEM NO.2
+
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+
+        ListNode *prev = NULL;
+        ListNode *curr = head;
+
+        while (curr != NULL) {
+
+            ListNode *nextNode = curr->next;
+
+            curr->next = prev;
+
+            prev = curr;
+            curr = nextNode;
+        }
+
+        return prev;
+    }
+};
+
+PROBLEM NO.3
+
+class Solution {
+public:
+    ListNode* middleNode(ListNode* head) {
+
+        ListNode *slow = head;
+        ListNode *fast = head;
+
+        while (fast != NULL && fast->next != NULL) {
+
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+
+        return slow;
+    }
+};
