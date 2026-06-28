@@ -1,1 +1,112 @@
+PROBLEM NO.1
+class Solution {
+public:
 
+    void inorder(TreeNode* root, vector<int>& ans) {
+
+        if (root == NULL)
+            return;
+
+        inorder(root->left, ans);
+
+        ans.push_back(root->val);
+
+        inorder(root->right, ans);
+    }
+
+    vector<int> inorderTraversal(TreeNode* root) {
+
+        vector<int> ans;
+
+        inorder(root, ans);
+
+        return ans;
+    }
+};
+PROBLEM NO.2
+class Solution {
+public:
+    vector<vector<int>> levelOrder(TreeNode* root) {
+
+        vector<vector<int>> ans;
+
+        if (root == NULL)
+            return ans;
+
+        queue<TreeNode*> q;
+        q.push(root);
+
+        while (!q.empty()) {
+
+            int size = q.size();
+            vector<int> level;
+
+            while (size--) {
+
+                TreeNode* node = q.front();
+                q.pop();
+
+                level.push_back(node->val);
+
+                if (node->left != NULL)
+                    q.push(node->left);
+
+                if (node->right != NULL)
+                    q.push(node->right);
+            }
+
+            ans.push_back(level);
+        }
+
+        return ans;
+    }
+};
+PROBLEM NO.3
+class Solution {
+public:
+    vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
+
+        vector<vector<int>> ans;
+
+        if (root == NULL)
+            return ans;
+
+        queue<TreeNode*> q;
+        q.push(root);
+
+        bool leftToRight = true;
+
+        while (!q.empty()) {
+
+            int size = q.size();
+            vector<int> level(size);
+
+            for (int i = 0; i < size; i++) {
+
+                TreeNode* node = q.front();
+                q.pop();
+
+                int index;
+
+                if (leftToRight)
+                    index = i;
+                else
+                    index = size - i - 1;
+
+                level[index] = node->val;
+
+                if (node->left != NULL)
+                    q.push(node->left);
+
+                if (node->right != NULL)
+                    q.push(node->right);
+            }
+
+            ans.push_back(level);
+
+            leftToRight = !leftToRight;
+        }
+
+        return ans;
+    }
+};
