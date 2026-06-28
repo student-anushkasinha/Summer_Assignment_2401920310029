@@ -1,1 +1,94 @@
+PROBLEM NO.1
+class Solution {
+public:
+    vector<int> dailyTemperatures(vector<int>& temperatures) {
 
+        int n = temperatures.size();
+        vector<int> ans(n, 0);
+        stack<int> st;
+
+        for (int i = n - 1; i >= 0; i--) {
+
+            while (!st.empty() && temperatures[st.top()] <= temperatures[i]) {
+                st.pop();
+            }
+
+            if (!st.empty()) {
+                ans[i] = st.top() - i;
+            }
+
+            st.push(i);
+        }
+
+        return ans;
+    }
+};
+
+PROBLEM NO.2
+class Solution {
+public:
+    int evalRPN(vector<string>& tokens) {
+
+        stack<int> st;
+
+        for (string s : tokens) {
+
+            if (s == "+" || s == "-" || s == "*" || s == "/") {
+
+                int b = st.top();
+                st.pop();
+
+                int a = st.top();
+                st.pop();
+
+                if (s == "+")
+                    st.push(a + b);
+                else if (s == "-")
+                    st.push(a - b);
+                else if (s == "*")
+                    st.push(a * b);
+                else
+                    st.push(a / b);
+            }
+            else {
+                st.push(stoi(s));
+            }
+        }
+
+        return st.top();
+    }
+};
+
+
+PROBLEM NO.3
+class Solution {
+public:
+    int largestRectangleArea(vector<int>& heights) {
+
+        stack<int> st;
+        int n = heights.size();
+        int ans = 0;
+
+        for (int i = 0; i <= n; i++) {
+
+            while (!st.empty() && (i == n || heights[st.top()] >= heights[i])) {
+
+                int h = heights[st.top()];
+                st.pop();
+
+                int width;
+
+                if (st.empty())
+                    width = i;
+                else
+                    width = i - st.top() - 1;
+
+                ans = max(ans, h * width);
+            }
+
+            st.push(i);
+        }
+
+        return ans;
+    }
+};
