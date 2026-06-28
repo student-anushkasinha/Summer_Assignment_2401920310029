@@ -1,1 +1,109 @@
+PROBLEM NO.1
+class Solution {
+public:
+    ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
 
+        ListNode dummy(0);
+        ListNode *tail = &dummy;
+
+        while (list1 != NULL && list2 != NULL) {
+
+            if (list1->val <= list2->val) {
+                tail->next = list1;
+                list1 = list1->next;
+            }
+            else {
+                tail->next = list2;
+                list2 = list2->next;
+            }
+
+            tail = tail->next;
+        }
+
+        if (list1 != NULL)
+            tail->next = list1;
+        else
+            tail->next = list2;
+
+        return dummy.next;
+    }
+};
+
+PROBLEM NO.2
+
+class Solution {
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+
+        ListNode dummy(0);
+        dummy.next = head;
+
+        ListNode *fast = &dummy;
+        ListNode *slow = &dummy;
+
+        for (int i = 0; i <= n; i++) {
+            fast = fast->next;
+        }
+
+        while (fast != NULL) {
+            fast = fast->next;
+            slow = slow->next;
+        }
+
+        ListNode *temp = slow->next;
+        slow->next = temp->next;
+        delete temp;
+
+        return dummy.next;
+    }
+};
+
+PROBLEM NO.3
+class Solution {
+public:
+
+    ListNode* reverse(ListNode* head) {
+
+        ListNode *prev = NULL;
+
+        while (head != NULL) {
+
+            ListNode *nextNode = head->next;
+            head->next = prev;
+            prev = head;
+            head = nextNode;
+        }
+
+        return prev;
+    }
+
+    bool isPalindrome(ListNode* head) {
+
+        if (head == NULL || head->next == NULL)
+            return true;
+
+        ListNode *slow = head;
+        ListNode *fast = head;
+
+        while (fast->next != NULL && fast->next->next != NULL) {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+
+        ListNode *second = reverse(slow->next);
+
+        ListNode *first = head;
+        ListNode *check = second;
+
+        while (check != NULL) {
+
+            if (first->val != check->val)
+                return false;
+
+            first = first->next;
+            check = check->next;
+        }
+
+        return true;
+    }
+};
