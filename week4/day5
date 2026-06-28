@@ -1,1 +1,125 @@
+PROBLEM NO.1
+class Solution {
+public:
 
+    bool check(TreeNode* left, TreeNode* right) {
+
+        if (left == NULL && right == NULL)
+            return true;
+
+        if (left == NULL || right == NULL)
+            return false;
+
+        if (left->val != right->val)
+            return false;
+
+        return check(left->left, right->right) &&
+               check(left->right, right->left);
+    }
+
+    bool isSymmetric(TreeNode* root) {
+
+        if (root == NULL)
+            return true;
+
+        return check(root->left, root->right);
+    }
+};
+
+PROBLEM NO.2
+class Solution {
+public:
+
+    unordered_map<int, int> pos;
+
+    TreeNode* build(vector<int>& preorder, int preStart, int preEnd,
+                    vector<int>& inorder, int inStart, int inEnd) {
+
+        if (preStart > preEnd || inStart > inEnd)
+            return NULL;
+
+        TreeNode* root = new TreeNode(preorder[preStart]);
+
+        int index = pos[root->val];
+        int leftSize = index - inStart;
+
+        root->left = build(preorder,
+                           preStart + 1,
+                           preStart + leftSize,
+                           inorder,
+                           inStart,
+                           index - 1);
+
+        root->right = build(preorder,
+                            preStart + leftSize + 1,
+                            preEnd,
+                            inorder,
+                            index + 1,
+                            inEnd);
+
+        return root;
+    }
+
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+
+        for (int i = 0; i < inorder.size(); i++)
+            pos[inorder[i]] = i;
+
+        return build(preorder,
+                     0,
+                     preorder.size() - 1,
+                     inorder,
+                     0,
+                     inorder.size() - 1);
+    }
+};
+
+
+PROBLEM NO.3
+class Codec {
+public:
+
+    void encode(TreeNode* root, string& s) {
+
+        if (root == NULL) {
+            s += "#,";
+            return;
+        }
+
+        s += to_string(root->val) + ",";
+
+        encode(root->left, s);
+        encode(root->right, s);
+    }
+
+    TreeNode* decode(stringstream& ss) {
+
+        string cur;
+        getline(ss, cur, ',');
+
+        if (cur == "#")
+            return NULL;
+
+        TreeNode* root = new TreeNode(stoi(cur));
+
+        root->left = decode(ss);
+        root->right = decode(ss);
+
+        return root;
+    }
+
+    string serialize(TreeNode* root) {
+
+        string ans;
+        encode(root, ans);
+
+        return ans;
+    }
+
+    TreeNode* deserialize(string data) {
+
+        stringstream ss(data);
+
+        return decode(ss);
+    }
+};
